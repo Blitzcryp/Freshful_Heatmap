@@ -6,17 +6,17 @@ namespace App\Services\User;
 
 use App\Repositories\User\GetUserJourneyRepository;
 use App\Repositories\User\UserRepository;
-use Illuminate\Routing\ResponseFactory;
+use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Support\Collection;
 
 class GetUserJourneyService
 {
-    private ResponseFactory $validator;
+    private Factory $validator;
     private UserRepository $userRepository;
     private GetUserJourneyRepository $getUserJourneyRepository;
 
     public function __construct(
-        ResponseFactory $validator,
+        Factory $validator,
         UserRepository $userRepository,
         GetUserJourneyRepository $getUserJourneyRepository
     ) {
@@ -36,8 +36,9 @@ class GetUserJourneyService
     {
         return $this->validator->make(
             ["id" => $id],
-            ["id" => "required", "numeric",
+            ["id" => "required",
                 function (string $attribute, string $value, callable $fail) {
+                    var_dump($value);
                     if($value < 0){
                       $fail("positive");
                     }

@@ -14,6 +14,6 @@ class LinkTypesHitsRepository extends BaseRepository
         return $this->databaseManager->connection()->table("rollup")
             ->where("timestamp", ">=", $startDateTime)
             ->where("timestamp", "<=", $endDateTime)
-            ->get();
+            ->get("linkType");
     }
 }

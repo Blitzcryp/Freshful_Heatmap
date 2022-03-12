@@ -29,9 +29,11 @@ class LinkTypeHitsService
         $recordsCount = [];
 
         foreach(LinksTypeEnums::cases() as $linkType){
-            $recordsCount[$linkType] = $allRecords->filter( function ($value, $key) use ($linkType) {
-                return $value === $linkType;
-            })->count();
+            $recordsCount[$linkType] = 0;
+        }
+
+        foreach($allRecords as $record){
+            $recordsCount[$record->linkType]++;
         }
 
         return $recordsCount;

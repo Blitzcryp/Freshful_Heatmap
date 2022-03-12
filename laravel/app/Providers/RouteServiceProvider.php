@@ -2,51 +2,41 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\PostbackController;
+use App\Http\Controllers\Statistics\LinkHitsController;
+use App\Http\Controllers\Statistics\LinkTypeHitsController;
+use App\Http\Controllers\User\GetUserJourneyController;
 use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
-class RouteServiceProvider extends ServiceProvider
+use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;
+
+
+class RouteServiceProvider extends LaravelRouteServiceProvider
 {
-    /**
-     * The path to the "home" route for your application.
-     *
-     * This is used by Laravel authentication to redirect users after login.
-     *
-     * @var string
-     */
-    public const HOME = '/home';
+    protected Config $config;
 
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->configureRateLimiting();
+    public function map(): void {
+        $this->group(["prefix" => "/api"], function () {
+            $this->group(["prefix" => "/statistics"], function () {
+                $this->get("/link-hits", LinkHitsController::class);
+                $this->get("/link-type-hits", LinkTypeHitsController::class);
+            });
 
-        $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            $this->group(["prefix" => "user"], function() {
+                $this->get("/journey/{id}", GetUserJourneyController::class);
+                $this->post("/postback", PostbackController::class);
+            });
         });
     }
 
-    /**
-     * Configure the rate limiters for the application.
-     *
-     * @return void
-     */
-    protected function configureRateLimiting()
+    public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
+        $this->config = $this->app->get(Config::class);
+
+        parent::boot();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Statistics;
 
 use App\Services\Statistics\LinkTypeHitsService;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class LinkTypeHitsController
@@ -19,13 +20,15 @@ class LinkTypeHitsController
         $this->linkTypeHitsService = $linkTypeHitsService;
     }
 
-    public function __invoke()
+    public function __invoke(): JsonResponse
     {
-        $this->linkTypeHitsService->get(
+        $result =  $this->linkTypeHitsService->get(
             [
                 "startDateTime" => $this->request->input("startDateTime"),
                 "endDateTime" => $this->request->input("endDateTime")
             ]
         );
+
+        return $this->response->json($result);
     }
 }

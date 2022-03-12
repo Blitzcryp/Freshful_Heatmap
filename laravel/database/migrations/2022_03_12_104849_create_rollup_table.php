@@ -11,12 +11,17 @@ return new class extends Migration
     {
         Schema::create('rollup', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("uid");
+            $table->integer("uid")->unsigned();
             $table->string("link");
             $table->enum("linkType", LinksTypeEnums::cases());
             $table->dateTime("timestamp");
 
-            $table->foreign("uid")->references("id")->on("users");
+            /*$table->foreign("uid")
+                ->references("id")
+                ->on("users")
+                ->onDelete("restrict")
+                ->onUpdate("cascade");
+            */
         });
     }
 

@@ -22,12 +22,10 @@ class PostbackController
 
     }
 
-    public function __invoke()
+    public function __invoke(): JsonResponse
     {
-        ["link" => $link, "linkType" => $linkType, "timestamp" => $timestamp, "uid" => $uid] = $this->request->json()->all();
+        $result = $this->postbackService->postback($this->request->json()->all());
 
-        $response = $this->postbackService->stuff($this->request->json()->all());
-
-        return $response;
+        return $this->response->json(["success" => $result]);
     }
 }

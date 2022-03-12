@@ -12,7 +12,7 @@ class GetUserJourneyRepository extends BaseRepository
     public function get(int $id): Collection
     {
         return $this->databaseManager->connection()->table("rollup")
-            ->where("id", $id)
+            ->where("uid", $id)
             ->get();
     }
 }

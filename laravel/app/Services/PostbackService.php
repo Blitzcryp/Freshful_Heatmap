@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Enums\LinksTypeEnums;
 use App\Repositories\PostbackRepository;
 use App\Repositories\User\UserRepository;
 use Carbon\Carbon;
@@ -25,11 +26,11 @@ class PostbackService
         $this->userRepository = $userRepository;
     }
 
-    public function stuff(array $input): bool
+    public function postback(array $input): bool
     {
         ["link" => $link, "linkType" => $linkType, "timestamp" => $timestamp, "uid" => $uid] = $this->validate($input);
 
-        return $this->postbackRepository->writePostback(
+        return $this->postbackRepository->createRollup(
             $link,
             $linkType,
             Carbon::createFromTimestamp($timestamp),
@@ -37,19 +38,15 @@ class PostbackService
         );
     }
 
-    private function validate(array $input){
+    private function validate(array $input): array
+    {
         return $this->validator->make($input, [
-            "link" => [
-                "required", "string"
-            ],
-            "linkType" => [
-                "required", Rule::in(["product", "category", "static-page", "checkout", "homepage"])
-            ],
-            "timestamp" => [
-                "required", "numeric"
-            ],
+            "link" => ["required", "string"],
+            "linkType" => ["required", Rule::in(LinksTypeEnums::cases())],
+            "timestamp" => ["required", "numeric"],
             "uid" => [
-                "required", "numeric", function (string $attribute, string $value, callable $fail) {
+                "required", "numeric",
+                function (string $attribute, string $value, callable $fail) {
                     if($value < 0){
                         $fail("positive");
                     }
