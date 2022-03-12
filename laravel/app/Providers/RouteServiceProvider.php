@@ -6,10 +6,6 @@ use App\Http\Controllers\PostbackController;
 use App\Http\Controllers\Statistics\LinkHitsController;
 use App\Http\Controllers\Statistics\LinkTypeHitsController;
 use App\Http\Controllers\User\GetUserJourneyController;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as LaravelRouteServiceProvider;

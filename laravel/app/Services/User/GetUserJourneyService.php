@@ -36,9 +36,7 @@ class GetUserJourneyService
     {
         return $this->validator->make(
             ["id" => $id],
-            ["id" => "required",
-                function (string $attribute, string $value, callable $fail) {
-                    var_dump($value);
+            ["id" => function (string $attribute, int $value, callable $fail) {
                     if($value < 0){
                       $fail("positive");
                     }
