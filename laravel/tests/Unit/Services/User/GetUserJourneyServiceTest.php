@@ -73,7 +73,7 @@ class GetUserJourneyServiceTest extends TestCase
                     "error" => "positive"
                 ]
             ],
-            "test #2 - id doesn't exist" => [
+            "test #2 - user doesn't exist by id" => [
                 [
                     "id" => 2,
                     "error" => "user does not exist"
