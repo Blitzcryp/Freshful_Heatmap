@@ -19,8 +19,6 @@ class BaseRepository
 
     protected function getCacheSignature(string $method, array $params = []): string
     {
-        // TODO Make integration test
-
         $sig = static::class . "::" . $method;
 
         ksort($params);

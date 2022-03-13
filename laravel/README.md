@@ -15,3 +15,4 @@
 - [ ] Users Similar Journey
     - [ ] Unit Test 
     - [ ] Integration Test
+- [x] Cache 
