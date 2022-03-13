@@ -4,24 +4,23 @@ namespace App\Http\Controllers\User;
 
 use App\Services\User\GetUserJourneyService;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\Http\JsonResponse;
 
 class GetUserJourneyController
 {
-    private Request $request;
     private ResponseFactory $responseFactory;
     private GetUserJourneyService $getUserJourneyService;
 
-    public function __construct(Request $request, ResponseFactory $responseFactory, GetUserJourneyService $getUserJourneyService)
+    public function __construct(ResponseFactory $responseFactory, GetUserJourneyService $getUserJourneyService)
     {
-        $this->request = $request;
         $this->responseFactory = $responseFactory;
         $this->getUserJourneyService = $getUserJourneyService;
     }
 
-    public function __invoke(int $id): Collection
+    public function __invoke(int $id): JsonResponse
     {
-        return $this->getUserJourneyService->get($id);
+        $result =  $this->getUserJourneyService->get($id);
+
+        return $this->responseFactory->json($result);
     }
 }

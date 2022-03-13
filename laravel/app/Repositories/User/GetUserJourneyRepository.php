@@ -20,4 +20,13 @@ class GetUserJourneyRepository extends BaseRepository
             }
         );
     }
+
+    public function getOtherUsersJourney(int $id, array $uniqueLinks): Collection
+    {
+        $query = $this->databaseManager->connection()->table("rollup");
+
+        $query = $query->whereIn("link", $uniqueLinks)->whereNot("uid", $id);
+
+        return $query->get(["uid", "link", "timestamp"]);
+    }
 }

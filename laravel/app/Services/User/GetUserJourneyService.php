@@ -12,16 +12,16 @@ use Illuminate\Support\Collection;
 class GetUserJourneyService
 {
     private Factory $validator;
-    private UsersRepository $userRepository;
+    private UsersRepository $usersRepository;
     private GetUserJourneyRepository $getUserJourneyRepository;
 
     public function __construct(
         Factory $validator,
-        UsersRepository $userRepository,
+        UsersRepository $usersRepository,
         GetUserJourneyRepository $getUserJourneyRepository
     ) {
         $this->validator = $validator;
-        $this->userRepository = $userRepository;
+        $this->usersRepository = $usersRepository;
         $this->getUserJourneyRepository = $getUserJourneyRepository;
     }
 
@@ -41,7 +41,7 @@ class GetUserJourneyService
                       $fail("positive");
                     }
 
-                    if(!$this->userRepository->userExistsById($value)){
+                    if(!$this->usersRepository->userExistsById($value)){
                         $fail("user does not exist");
                     }
             }],
