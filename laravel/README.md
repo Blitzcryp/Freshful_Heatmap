@@ -7,7 +7,7 @@
   - [x] Unit Test
 - [x] Link Hits
     - [x] Unit Test
-    - [ ] Integration Test
+    - [x] Integration Test
 - [x] Link Types Hits 
     - [x] Unit Test
     - [ ] Integration Test
