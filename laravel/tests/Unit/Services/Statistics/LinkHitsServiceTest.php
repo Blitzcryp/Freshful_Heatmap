@@ -13,13 +13,13 @@ class LinkHitsServiceTest extends TestCase
 
         $linkHitsRepository = $this->mock(LinkHitsRepository::class);
         $linkHitsRepository->shouldReceive("get")
-            ->with("link", "startDateTime", "endDateTime")
+            ->with("link", "2020-01-30 05:22:11", "2022-01-30 05:22:11")
             ->andReturn(10);
 
         /** @var LinkHitsService $linkHitsService */
         $linkHitsService = $this->app->get(LinkHitsService::class);
 
-        $result = $linkHitsService->getStats(["link" => "link", "startDateTime" => "startDateTime", "endDateTime" => "endDateTime"]);
+        $result = $linkHitsService->getStats(["link" => "link", "startDateTime" => "2020-01-30 05:22:11", "endDateTime" =>  "2022-01-30 05:22:11"]);
 
         $this->assertEquals(10, $result);
     }
@@ -46,8 +46,8 @@ class LinkHitsServiceTest extends TestCase
             "test #1 - missing link" => [
                 [
                     "input" => [
-                        "startDateTime" => "startDateTime",
-                        "endDateTime" => "endDateTime"
+                        "startDateTime" => "2020-01-30 05:22:11",
+                        "endDateTime" => "2022-01-30 05:22:11"
                     ],
                     "error" => ["link" => ["required"]]
                 ]
@@ -56,7 +56,7 @@ class LinkHitsServiceTest extends TestCase
                 [
                     "input" => [
                         "link" => "link",
-                        "endDateTime" => "endDateTime"
+                        "endDateTime" => "2022-01-30 05:22:11"
                     ],
                     "error" => ["startDateTime" => ["required"]]
                 ]
@@ -65,7 +65,7 @@ class LinkHitsServiceTest extends TestCase
                 [
                     "input" => [
                         "link" => "link",
-                        "startDateTime" => "startDateTime",
+                        "startDateTime" => "2020-01-30 05:22:11",
                     ],
                     "error" => ["endDateTime" => ["required"]]
                 ]
@@ -77,6 +77,19 @@ class LinkHitsServiceTest extends TestCase
                         "link" => ["required"],
                         "startDateTime" => ["required"],
                         "endDateTime" => ["required"]
+                    ]
+                ]
+            ],
+            "test #5 - startDateTime and endDateTime not date format" => [
+                [
+                    "input" => [
+                        "link" => "link",
+                        "startDateTime" => "startDateTime",
+                        "endDateTime" => "endDateTime"
+                    ],
+                    "error" => [
+                        "startDateTime" => ["date_format:Y-m-d H:i:s"],
+                        "endDateTime" => ["date_format:Y-m-d H:i:s"],
                     ]
                 ]
             ]

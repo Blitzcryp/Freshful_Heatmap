@@ -29,13 +29,15 @@ class LinkHitsService
             $input,
             [
                 "link" => "required",
-                "startDateTime" => "required",
-                "endDateTime" => "required"
+                "startDateTime" => ["required", "date_format:Y-m-d H:i:s"],
+                "endDateTime" => ["required", "date_format:Y-m-d H:i:s"]
             ],
             [
                 "link.required" => "required",
                 "startDateTime.required" => "required",
-                "endDateTime.required" => "required"
+                "startDateTime.date_format" => "date_format:Y-m-d H:i:s",
+                "endDateTime.required" => "required",
+                "endDateTime.date_format" => "date_format:Y-m-d H:i:s"
             ])->validate();
     }
 }
