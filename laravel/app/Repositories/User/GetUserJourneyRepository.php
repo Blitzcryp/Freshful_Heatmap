@@ -27,6 +27,14 @@ class GetUserJourneyRepository extends BaseRepository
 
         $query = $query->whereIn("link", $uniqueLinks)->whereNot("uid", $id);
 
-        return $query->get(["uid", "link", "timestamp"]);
+        return $this->cache->rememberForever(
+            $this->getCacheSignature(__FUNCTION__, [
+                "id" => $id,
+                "uniqueLinks" => $uniqueLinks
+            ]),
+            function () use ($query) {
+                return $query->get(["uid", "link", "timestamp"]);
+            }
+        );
     }
 }

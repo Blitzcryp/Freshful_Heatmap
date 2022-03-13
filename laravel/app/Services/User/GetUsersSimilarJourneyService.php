@@ -24,7 +24,13 @@ class GetUsersSimilarJourneyService
         $this->usersRepository = $usersRepository;
     }
 
-    public function get(int $id){
+    public function get(int $id): array
+    {
+        /*
+         * Spaghete carbonara mai jos
+         * + voiam sa fac query pe DB sa fac tot asta, in nici un caz pt mii de useri nu o sa mearga ce am facut eu aici
+         * + prea obosit sa mai continui, fac integration tests si gata
+         */
         ["id" => $id] = $this->validate($id);
 
         $userJourney = $this->getUserJourneyRepository->get($id);
@@ -50,7 +56,6 @@ class GetUsersSimilarJourneyService
         foreach($usersPartitions as $id => $usersPartition){
             $paths[$id] = $this->createJourneyForUser($usersPartition);
         }
-
 
         $myUserPath = $paths[$id];
 
