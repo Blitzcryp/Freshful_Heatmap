@@ -26,6 +26,7 @@ class LinkTypeHitsService
 
 
         $allRecords = $this->linkTypesHitsRepository->getAllRecordsInTimeInterval($startDateTime, $endDateTime);
+
         $recordsCount = [];
 
         foreach(LinksTypeEnums::cases() as $linkType){
@@ -42,14 +43,16 @@ class LinkTypeHitsService
     private function validate(array $input): array
     {
         return $this->validator->make($input, [
-            "startDateTime" => ["required", "string"],
-            "endDateTime" => ["required", "string"]
+            "startDateTime" => ["required", "string", "date_format:Y-m-d H:i:s"],
+            "endDateTime" => ["required", "string", "date_format:Y-m-d H:i:s"]
         ],
         [
             "startDateTime.required" => "required",
             "startDateTime.string" => "string",
+            "startDateTime.date_format" => "date_format:Y-m-d H:i:s",
             "endDateTime.required" => "required",
-            "endDateTime.string" => "string"
+            "endDateTime.string" => "string",
+            "endDateTime.date_format" => "date_format:Y-m-d H:i:s",
         ])->validate();
     }
 }

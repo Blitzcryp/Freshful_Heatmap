@@ -6,7 +6,7 @@ namespace App\Repositories\User;
 
 use App\Repositories\BaseRepository;
 
-class UserRepository extends BaseRepository
+class UsersRepository extends BaseRepository
 {
     public function userExistsById(int $id): bool
     {

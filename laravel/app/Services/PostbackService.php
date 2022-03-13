@@ -5,7 +5,7 @@ namespace App\Services;
 
 use App\Enums\LinksTypeEnums;
 use App\Repositories\PostbackRepository;
-use App\Repositories\User\UserRepository;
+use App\Repositories\User\UsersRepository;
 use Carbon\Carbon;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Rule;
@@ -14,12 +14,12 @@ class PostbackService
 {
     private Factory $validator;
     private PostbackRepository $postbackRepository;
-    private UserRepository $userRepository;
+    private UsersRepository $userRepository;
 
     public function __construct(
         Factory $validator,
         PostbackRepository $postbackRepository,
-        UserRepository $userRepository
+        UsersRepository $userRepository
     ) {
         $this->validator = $validator;
         $this->postbackRepository = $postbackRepository;
@@ -33,7 +33,7 @@ class PostbackService
         return $this->postbackRepository->createRollup(
             $link,
             $linkType,
-            Carbon::createFromTimestamp($timestamp),
+            Carbon::createFromTimestamp($timestamp)->toDateTimeString(),
             $uid
         );
     }

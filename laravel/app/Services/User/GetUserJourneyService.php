@@ -5,19 +5,19 @@ namespace App\Services\User;
 
 
 use App\Repositories\User\GetUserJourneyRepository;
-use App\Repositories\User\UserRepository;
+use App\Repositories\User\UsersRepository;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Support\Collection;
 
 class GetUserJourneyService
 {
     private Factory $validator;
-    private UserRepository $userRepository;
+    private UsersRepository $userRepository;
     private GetUserJourneyRepository $getUserJourneyRepository;
 
     public function __construct(
         Factory $validator,
-        UserRepository $userRepository,
+        UsersRepository $userRepository,
         GetUserJourneyRepository $getUserJourneyRepository
     ) {
         $this->validator = $validator;
