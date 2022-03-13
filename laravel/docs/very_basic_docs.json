@@ -1,0 +1,94 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sample API",
+    "description": "Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.",
+    "version": "0.1.9"
+  },
+  "paths": {
+    "/api/user/postback": {
+      "post": {
+        "summary": "Inserts data in rollup",
+        "parameters": [
+          {
+            "name": "link",
+            "required": true
+          },
+          {
+            "name": "linkType",
+            "required": true
+          },
+          {
+            "name": "timestamp",
+            "required": true,
+            "description": "Unix Timestamp"
+          },
+          {
+            "name": "uid",
+            "required": true,
+            "description": "User Id"
+          }
+        ],
+        "description": "Inserts the link, linkType and timestamp for a user"
+      }
+    },
+    "/api/statistics/link-hits": {
+      "get": {
+        "summary": "Get Link Hits",
+        "parameters": [
+          {
+            "name": "startDateTime",
+            "in": "path",
+            "required": true,
+            "description": "DateTime Y-m-d H:i:s"
+          },
+          {
+            "name": "endDateTime",
+            "in": "path",
+            "required": true,
+            "description": "DateTime Y-m-d H:i:s"
+          },
+          {
+            "name": "link",
+            "in": "path",
+            "required": true,
+            "description": "Link to check"
+          }
+        ],
+        "description": "Find how many times a link has been hit in a time interval"
+      }
+    },
+    "/api/statistics/link-type-hits": {
+      "get": {
+        "summary": "Get Link Types Hits",
+        "parameters": [
+          {
+            "name": "startDateTime",
+            "in": "path",
+            "required": true,
+            "description": "DateTime Y-m-d H:i:s"
+          },
+          {
+            "name": "endDateTime",
+            "in": "path",
+            "required": true,
+            "description": "DateTime Y-m-d H:i:s"
+          }
+        ],
+        "description": "Check how many times all link types have been hit in a time interval"
+      }
+    },
+    "/api/user/journey/{userId}": {
+      "get": {
+        "summary": "Get user journey",
+        "description": "Get the journey through the site for a user"
+      }
+    },
+    "/api/user/journey/similar/{userId}": {
+      "get": {
+        "summary": "Get users journey similar to given user",
+        "description": "Get the journey through the site for a user"
+      }
+    }
+  }
+}
