@@ -1,4 +1,6 @@
 - [x] Custom Router
+- [x] Cache
+- [x] Post-Query Breakdown
 - [x] Setup DB + Migrations + Seeder
 - [x] MVC 
 - [x] Postback CSR (Controller-Service-Repository)
@@ -12,7 +14,7 @@
 - [x] User Journey
     - [x] Unit Test
     - [ ] Integration Test
-- [ ] Users Similar Journey
-    - [ ] Unit Test 
+- [x] Users Similar Journey
+    - [x] Unit Test 
     - [ ] Integration Test
-- [x] Cache 
+
